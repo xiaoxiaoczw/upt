@@ -3,10 +3,6 @@ from cv2 import VideoCapture
 from cv2 import imwrite
 
 
-# 定义保存图片函数
-# image:要保存的图片名字
-# addr；图片地址与相片名字的前部分
-# num: 相片，名字的后缀。int 类型
 def save_image(image, addr, num):
     address = addr + str(num) + '.jpg'
     imwrite(address, image)
@@ -14,22 +10,22 @@ def save_image(image, addr, num):
 
 if __name__ == '__main__':
 
-    video_path = "./video/cooking.mp4"  # 视频路径
-    out_path = "./frames/img_"  # 保存图片路径+名字
+    video_path = "./video/cooking.mp4"  # video path
+    out_path = "./frames/img_"  # saved frame path
 
-    # is_all_frame = False  # 是否取所有的帧
-    # sta_frame = 1  # 开始帧
-    # end_frame = 40  # 结束帧
+    # is_all_frame = False
+    # sta_frame = 1
+    # end_frame = 40
 
     is_all_frame = True
 
     ######
-    time_interval = 10  # 时间间隔
+    time_interval = 10  # time_interval
 
-    # 读取视频文件
+    # read video
     videoCapture = VideoCapture(video_path)
 
-    # 读帧
+    # write frame
     success, frame = videoCapture.read()
     print(success)
 
