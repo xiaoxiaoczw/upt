@@ -14,15 +14,17 @@ def save_image(image, addr, num):
 
 if __name__ == '__main__':
 
-    video_path = "./output/1.mp4"  # 视频路径
-    out_path = "./output/img_"  # 保存图片路径+名字
+    video_path = "./video/cooking.mp4"  # 视频路径
+    out_path = "./frames/img_"  # 保存图片路径+名字
 
-    is_all_frame = False  # 是否取所有的帧
-    sta_frame = 1  # 开始帧
-    end_frame = 40  # 结束帧
+    # is_all_frame = False  # 是否取所有的帧
+    # sta_frame = 1  # 开始帧
+    # end_frame = 40  # 结束帧
+
+    is_all_frame = True
 
     ######
-    time_interval = 1  # 时间间隔
+    time_interval = 10  # 时间间隔
 
     # 读取视频文件
     videoCapture = VideoCapture(video_path)
@@ -34,7 +36,7 @@ if __name__ == '__main__':
     i = 0
     j = 0
     if is_all_frame:
-        time_interval = 1
+        time_interval = 10
 
     while success:
         i = i + 1
