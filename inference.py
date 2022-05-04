@@ -22,6 +22,11 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 from utils import DataFactory
 from upt import build_detector
 
+"""for test to import thop, ptflops and pytorch_model_summary"""
+from thop import profile
+from ptflops import get_model_complexity_info
+from pytorch_model_summary import summary
+
 warnings.filterwarnings("ignore")
 
 def draw_boxes(ax, boxes):
@@ -136,6 +141,30 @@ def main(args):
     upt = build_detector(args, conversion)
     upt.eval()
 
+    """test about model size and flops"""
+    # print(upt)  # my test here
+    # dummy_input = torch.randn(1, 3, 128, 128)
+    dummy_input = torch.randn(1, 3, 720, 1280)
+
+    "thop"
+    # flops, params = profile(upt, (dummy_input,))
+    # print('flops: ', flops, 'params: ', params)
+    # print('flops: %.2f M, params: %.2f M' % (flops / 1000000.0, params / 1000000.0))
+
+    "ptflops report error"
+    # flops, params = get_model_complexity_info(upt, (3, 128, 128), as_strings=True, print_per_layer_stat=True)
+    # print('flops: ', flops, 'params: ', params)
+
+    "pytorch_model_summary"
+    # print(summary(upt, dummy_input, show_input=False, show_hierarchical=False))
+
+    "direct"
+    Trainable_params = sum(p.numel() for p in upt.parameters() if p.requires_grad)
+    print('Trainable_params: ', Trainable_params)
+    print('Trainable_params: %.2f M' % (Trainable_params / 1000000.0))
+
+    """test end here"""
+
     if os.path.exists(args.resume):
         print(f"=> Continue from saved checkpoint {args.resume}")
         checkpoint = torch.load(args.resume, map_location='cpu')
@@ -209,3 +238,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     main(args)
+
+    print("this code end here")
